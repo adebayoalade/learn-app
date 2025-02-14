@@ -220,7 +220,6 @@ export default function QuizApp() {
         animate={{ opacity: 1 }}
         className="text-center space-y-6"
       >
-        {/* <Trophy className="h-24 w-24 mx-auto text-yellow-500" /> */}
         <CardTitle className="text-2xl">Quiz Completed!</CardTitle>
         <div className="text-4xl font-bold text-teal-600">{score} / {questions.length}</div>
         <p className="text-gray-600">{message}</p>
