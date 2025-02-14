@@ -1,0 +1,160 @@
+{
+    "questions": [
+      {
+        "id": 1,
+        "type": "multiple-choice",
+        "question": "What do plants need for photosynthesis?",
+        "options": [
+          { "id": "A", "text": "Oxygen & Sugar" },
+          { "id": "B", "text": "Sunlight, Water & Carbon Dioxide" },
+          { "id": "C", "text": "Protein & Salt" }
+        ],
+        "correct": "B",
+        "feedbackCorrect": "Great job! Plants use sunlight, water, and carbon dioxide in photosynthesis to produce glucose and oxygen.",
+        "feedbackIncorrect": "Plants use sunlight, water, and CO2 to create their own food through photosynthesis."
+      },
+      {
+        "id": 2,
+        "type": "multiple-choice",
+        "question": "What does c represent in co2?",
+        "options": [
+          { "id": "A", "text": "calcium" },
+          { "id": "B", "text": "carbon" },
+          { "id": "C", "text": "chlorine" }
+        ],
+        "correct": "B",
+        "feedbackCorrect": "Correct! c represent carbon.",
+        "feedbackIncorrect": "c is called carbon."
+      },
+      {
+        "id": 3,
+        "type": "multiple-choice",
+        "question": "What is the hardest natural substance on Earth?",
+        "options": [
+          { "id": "A", "text": "Diamond" },
+          { "id": "B", "text": "Titanium" },
+          { "id": "C", "text": "Quartz" }
+        ],
+        "correct": "A",
+        "feedbackCorrect": "Correct! Diamonds are formed from carbon under extreme pressure and heat.",
+        "feedbackIncorrect": "Diamonds are the hardest known natural material on Earth."
+      },
+      {
+        "id": 4,
+        "type": "multiple-choice",
+        "question": "Which of these is NOT a primary color in painting?",
+        "options": [
+          { "id": "A", "text": "Red" },
+          { "id": "B", "text": "Blue" },
+          { "id": "C", "text": "Green" }
+        ],
+        "correct": "C",
+        "feedbackCorrect": "That's right! the primary colors are red, blue, and yellow.",
+        "feedbackIncorrect": "the primary colors are red, blue, and yellow. Green is a secondary color made by mixing blue and yellow."
+      },
+      {
+        "id": 5,
+        "type": "multiple-choice",
+        "question": "What is the capital of Nigeria?",
+        "options": [
+          { "id": "A", "text": "Lagos" },
+          { "id": "B", "text": "Kano" },
+          { "id": "C", "text": "Abuja" }
+        ],
+        "correct": "C",
+        "feedbackCorrect": "Correct! Abuja is the capital of Nigeria.",
+        "feedbackIncorrect": "Abuja is the capital city of Nigeria."
+      },
+      {
+        "id": 6,
+        "type": "drag-drop",
+        "question": "Match the Algebraic Terms!",
+        "items": [
+          { "id": "constant", "text": "A fixed number that doesn't change" },
+          { "id": "variable", "text": "A letter that represents a value" },
+          { "id": "equation", "text": "A statement that two expressions are equal" }
+        ],
+        "slots": ["variable", "constant", "equation"],
+        "correct": {
+          "slot-0": "variable",
+          "slot-1": "constant",
+          "slot-2": "equation"
+        },
+        "feedbackCorrect": "Correct! Understanding these algebraic terms is fundamental to solving equations.",
+        "feedbackIncorrect": "The correct matches are: A letter that represents a value → variable, A fixed number → constant, A statement that two expressions are equal → equation."
+      },
+      {
+        "id": 7,
+        "type": "drag-drop",
+        "question": "Match each animal to its classification!",
+        "items": [
+          { "id": "mammal", "text": "Has hair/fur and produces milk" },
+          { "id": "reptile", "text": "Has scales and lays eggs on land" },
+          { "id": "amphibian", "text": "Lives part of life in water, part on land" }
+        ],
+        "slots": ["mammal", "reptile", "amphibian"],
+        "correct": {
+          "slot-0": "mammal",
+          "slot-1": "reptile",
+          "slot-2": "amphibian"
+        },
+        "feedbackCorrect": "Correct! You understand the key characteristics that define these animal groups.",
+        "feedbackIncorrect": "The correct matches are: Has hair/fur → mammal, Has scales → reptile, Lives part in water → amphibian."
+      },
+      {
+        "id": 8,
+        "type": "drag-drop",
+        "question": "Match each literary term to its definition!",
+        "items": [
+          { "id": "metaphor", "text": "Comparison between two things without using 'like' or 'as'" },
+          { "id": "simile", "text": "Comparison using 'like' or 'as'" },
+          { "id": "personification", "text": "Giving human qualities to non-human things" }
+        ],
+        "slots": ["metaphor", "simile", "personification"],
+        "correct": {
+          "slot-0": "metaphor",
+          "slot-1": "simile",
+          "slot-2": "personification"
+        },
+        "feedbackCorrect": "Correct! These literary devices help create vivid imagery in writing.",
+        "feedbackIncorrect": "The correct matches are: Comparison without 'like' → metaphor, Comparison using 'like' → simile, Human qualities to non-human → personification."
+      },
+      {
+        "id": 9,
+        "type": "drag-drop",
+        "question": "Match each scientific instrument to its function!",
+        "items": [
+          { "id": "telescope", "text": "Used to observe distant objects in space" },
+          { "id": "microscope", "text": "Used to see very small objects" },
+          { "id": "thermometer", "text": "Used to measure temperature" }
+        ],
+        "slots": ["microscope", "telescope", "thermometer"],
+        "correct": {
+          "slot-0": "microscope",
+          "slot-1": "telescope",
+          "slot-2": "thermometer"
+        },
+        "feedbackCorrect": "Correct! These instruments are crucial tools in scientific observation and measurement.",
+        "feedbackIncorrect": "The correct matches are: See small objects → microscope, Observe space → telescope, Measure temperature → thermometer."
+      },
+      {
+        "id": 10,
+        "type": "drag-drop",
+        "question": "Match each musical term to its meaning!",
+        "items": [
+          { "id": "tempo", "text": "The speed at which music is played" },
+          { "id": "dynamics", "text": "The volume levels in music" },
+          { "id": "rhythm", "text": "The pattern of beats and timing in music" }
+        ],
+        "slots": ["tempo", "dynamics", "rhythm"],
+        "correct": {
+          "slot-0": "tempo",
+          "slot-1": "dynamics",
+          "slot-2": "rhythm"
+        },
+        "feedbackCorrect": "Correct! Understanding these elements helps in appreciating and creating music.",
+        "feedbackIncorrect": "The correct matches are: Speed of music → tempo, Volume levels → dynamics, Pattern of beats → rhythm."
+      }
+    ]
+  }
+  
