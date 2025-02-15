@@ -6,7 +6,6 @@ import { Button } from './ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../index.css';
 
-
 export default function QuizApp() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -17,9 +16,10 @@ export default function QuizApp() {
   const [droppedItems, setDroppedItems] = useState({});
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [touchId, setTouchId] = useState(null);
+  const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // In a real app,fetch from your server
     import('../data/db.json')
       .then(data => {
         setQuestions(data.questions);
@@ -31,6 +31,7 @@ export default function QuizApp() {
       });
   }, []);
 
+  // Mouse event handlers
   const handleDragStart = (item) => {
     setDraggedItem(item);
   };
@@ -40,13 +41,86 @@ export default function QuizApp() {
   };
 
   const handleDrop = (slotId) => {
-    if (draggedItem) {
+    if (draggedItem || touchId) {
+      const itemToAdd = draggedItem || touchId;
       setDroppedItems(prev => ({
         ...prev,
-        [slotId]: draggedItem
+        [slotId]: itemToAdd
       }));
       setDraggedItem(null);
+      setTouchId(null);
     }
+  };
+
+  // Touch event handlers
+  const handleTouchStart = (e, itemId) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    setTouchId(itemId);
+    setTouchPosition({
+      x: touch.clientX,
+      y: touch.clientY
+    });
+    
+    // Get the element being touched
+    const element = e.target;
+    element.style.transform = 'scale(1.05)';
+    element.style.opacity = '0.8';
+  };
+
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    if (!touchId) return;
+
+    const touch = e.touches[0];
+    setTouchPosition({
+      x: touch.clientX,
+      y: touch.clientY
+    });
+
+    // Find drop zones and check for overlap
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const touchElement = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    dropZones.forEach(zone => {
+      if (zone.contains(touchElement)) {
+        zone.style.borderColor = '#14b8a6';
+        zone.style.backgroundColor = '#f0fdfa';
+      } else {
+        zone.style.borderColor = '#d1d5db';
+        zone.style.backgroundColor = 'transparent';
+      }
+    });
+  };
+
+  const handleTouchEnd = (e) => {
+    e.preventDefault();
+    if (!touchId) return;
+
+    // Find the drop zone under the final touch position
+    const touchElement = document.elementFromPoint(touchPosition.x, touchPosition.y);
+    const dropZone = touchElement?.closest('.drop-zone');
+    
+    if (dropZone) {
+      const slotId = dropZone.dataset.slotId;
+      handleDrop(slotId);
+    }
+
+    // Reset styles
+    const dropZones = document.querySelectorAll('.drop-zone');
+    dropZones.forEach(zone => {
+      zone.style.borderColor = '#d1d5db';
+      zone.style.backgroundColor = 'transparent';
+    });
+
+    // Reset the touched element
+    const dragItems = document.querySelectorAll('.drag-item');
+    dragItems.forEach(item => {
+      item.style.transform = '';
+      item.style.opacity = '';
+    });
+
+    setTouchId(null);
   };
 
   const handleMultipleChoiceSelect = (answer) => {
@@ -115,6 +189,7 @@ export default function QuizApp() {
     );
   };
 
+  
   const renderDragAndDrop = () => {
     const question = questions[currentQuestion];
     return (
@@ -123,10 +198,12 @@ export default function QuizApp() {
           {question.slots.map((slot, index) => (
             <div
               key={`slot-${index}`}
+              data-slot-id={`slot-${index}`}
+              className={`drop-zone h-20 rounded-lg border-2 border-dashed p-4 transition-colors
+                ${droppedItems[`slot-${index}`] ? 'border-teal-500 bg-teal-50' : 'border-gray-300'}`}
               onDragOver={handleDragOver}
               onDrop={() => handleDrop(`slot-${index}`)}
-              className={`h-20 rounded-lg border-2 border-dashed p-4 transition-colors
-                ${droppedItems[`slot-${index}`] ? 'border-teal-500 bg-teal-50' : 'border-gray-300'}`}
+              onTouchEnd={handleTouchEnd}
             >
               {droppedItems[`slot-${index}`] ? (
                 <motion.div
@@ -136,28 +213,38 @@ export default function QuizApp() {
                   {question.items.find(item => item.id === droppedItems[`slot-${index}`])?.text}
                 </motion.div>
               ) : (
-                'Drop here...'
+                <div className="text-gray-500">
+                  {touchId ? 'Release to drop...' : 'Drop here...'}
+                </div>
               )}
             </div>
           ))}
         </div>
         <div className="flex flex-wrap gap-2">
-          {question.items.filter(item => !Object.values(droppedItems).includes(item.id)).map((item) => (
-            <motion.div
-              key={item.id}
-              draggable
-              onDragStart={() => handleDragStart(item.id)}
-              className="p-3 bg-gray-100 rounded-md cursor-move"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {item.text}
-            </motion.div>
-          ))}
+          {question.items
+            .filter(item => !Object.values(droppedItems).includes(item.id))
+            .map((item) => (
+              <motion.div
+                key={item.id}
+                className={`drag-item p-3 rounded-md select-none
+                  ${touchId === item.id ? 'bg-teal-100' : 'bg-gray-100'}`}
+                draggable
+                onDragStart={() => handleDragStart(item.id)}
+                onTouchStart={(e) => handleTouchStart(e, item.id)}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {item.text}
+              </motion.div>
+            ))}
         </div>
       </div>
     );
   };
+
+
 
   const renderFeedback = () => {
     const currentQ = questions[currentQuestion];
@@ -329,5 +416,6 @@ export default function QuizApp() {
           )}
         </div>
       </CardContent>
-    </Card>  );
+    </Card>  
+    );
 }
